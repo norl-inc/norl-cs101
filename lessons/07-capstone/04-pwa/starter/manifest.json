@@ -1,0 +1,11 @@
+{
+  "name": "TODO: アプリの名前（例: マイメモ）",
+  "short_name": "TODO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "TODO: 色を #RRGGBB の形で（例: #2f6fed）",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

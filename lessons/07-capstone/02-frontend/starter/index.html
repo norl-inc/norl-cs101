@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>メモ</title>
+  <style>
+    body { font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 16px; }
+    form { display: flex; gap: 8px; }
+    input { flex: 1; padding: 8px; font-size: 16px; }
+    button { padding: 8px 12px; font-size: 16px; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; justify-content: space-between; align-items: center;
+         padding: 8px 0; border-bottom: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <h1>メモ</h1>
+
+  <form id="form">
+    <input id="text" placeholder="メモを書く" autocomplete="off">
+    <button type="submit">追加</button>
+  </form>
+
+  <ul id="list"></ul>
+
+  <script>
+    // 自分と同じサーバーのAPI。頭に http://... を付けなくていい（＝CORSの心配もない）
+    const API = "/api/memos";
+
+    const list = document.getElementById("list");
+    const form = document.getElementById("form");
+    const input = document.getElementById("text");
+
+    // 画面を作り直す：APIから一覧をもらって <li> を並べる
+    async function load() {
+      // TODO 1: API に GET して、返ってきた JSON を memos に入れる
+      const memos = [];
+
+      list.innerHTML = "";
+      for (const m of memos) {
+        const li = document.createElement("li");
+        li.textContent = m.text; // innerHTML ではなく textContent（入力をそのままHTMLにしない）
+        const del = document.createElement("button");
+        del.textContent = "削除";
+        del.onclick = () => remove(m.id);
+        li.appendChild(del);
+        list.appendChild(li);
+      }
+    }
+
+    async function add(text) {
+      // TODO 2: API に POST して、{ "text": text } を JSON で送る
+      await load();
+    }
+
+    async function remove(id) {
+      // TODO 3: API の /id番 に DELETE を送る
+      await load();
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault(); // ページ全体が再読み込みされるのを止める
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      await add(text);
+    });
+
+    load();
+  </script>
+</body>
+</html>

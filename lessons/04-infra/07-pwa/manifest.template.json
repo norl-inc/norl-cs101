@@ -1,0 +1,12 @@
+{
+  "name": "TODO: アプリの名前（例: 私のサイト）",
+  "short_name": "TODO: 短い名前（ホーム画面に出る。12文字くらいまで）",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "TODO: 好きな色（例: #2563eb）",
+  "icons": [
+    { "src": "TODO: 192の画像ファイル名", "sizes": "192x192", "type": "image/png" },
+    { "src": "TODO: 512の画像ファイル名", "sizes": "512x512", "type": "image/png" }
+  ]
+}
