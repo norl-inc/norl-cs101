@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>norl-cs101 をはじめる</title>
+<style>
+  :root { --bg: #faf9f6; --card: #ffffff; --text: #1f1e1c; --muted: #6b6a66; --accent: #c4673f; --accent-text: #ffffff; --border: #e6e3dc; --code: #f2f0eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1c1b19; --card: #262522; --text: #ece9e2; --muted: #a29f97; --accent: #d97a52; --accent-text: #1c1b19; --border: #3a3834; --code: #2f2d29; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; line-height: 1.7; }
+  main { max-width: 640px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font-size: 28px; font-weight: 600; margin: 0 0 8px; }
+  .lead { color: var(--muted); margin: 0 0 32px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 17px; font-weight: 600; margin: 0 0 12px; }
+  ol { margin: 0; padding-left: 1.3em; }
+  li { margin-bottom: 6px; }
+  .btn { display: block; text-align: center; background: var(--accent); color: var(--accent-text); text-decoration: none; font-weight: 600; font-size: 18px; padding: 16px; border-radius: 12px; margin: 8px 0 4px; }
+  .btn:hover { filter: brightness(1.05); }
+  .note { font-size: 14px; color: var(--muted); }
+  pre { background: var(--code); border-radius: 10px; padding: 14px; white-space: pre-wrap; word-break: break-all; font-size: 14px; margin: 8px 0; }
+  button.copy { border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>norl-cs101 をはじめる</h1>
+  <p class="lead">Claude を家庭教師にして、パソコンと AI の裏側を少しずつのぞいていくコースです。</p>
+
+  <div class="card">
+    <h2>1. このボタンを押す</h2>
+    <a class="btn" id="go" href="#">Claude でコースをはじめる</a>
+    <p class="note">「Claude を開きますか？」と聞かれたら「開く」を押してください。Claude アプリの入力欄に、お願いの文が入った状態で開きます。</p>
+  </div>
+
+  <div class="card">
+    <h2>2. Claude で送信する</h2>
+    <ol>
+      <li>入力欄に入った文を、そのまま送信します（Enter）</li>
+      <li>Claude がコースを「書類」フォルダに取ってきます。「許可しますか？」「このフォルダを使いますか？」と聞かれたら、許可してください</li>
+      <li>準備ができたら、Claude が次に打つことを教えてくれます。言われたとおり <code>/start</code> と打てば、レッスンが始まります</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>ボタンで開かないときは</h2>
+    <p class="note">Claude アプリを開いて、左上の「Code」を選び、下の文をコピーして送ってください。</p>
+    <pre id="prompt"></pre>
+    <button class="copy" id="copy">コピーする</button>
+  </div>
+
+  <p class="note">コースの中身：<a href="https://github.com/norl-inc/norl-cs101">github.com/norl-inc/norl-cs101</a></p>
+</main>
+<script>
+  const prompt = "norl-cs101 という学習コースを始めたいです。https://github.com/norl-inc/norl-cs101 を、私の「書類」フォルダ（Documents）の中にクローンして、このセッションをそのフォルダに移してください。移れたら、次に何と打てばいいかだけ教えてください。";
+  document.getElementById("go").href = "claude://code/new?q=" + encodeURIComponent(prompt);
+  document.getElementById("prompt").textContent = prompt;
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    try { await navigator.clipboard.writeText(prompt); e.target.textContent = "コピーしました"; }
+    catch { e.target.textContent = "上の文を選んでコピーしてください"; }
+  });
+</script>
+</body>
+</html>
